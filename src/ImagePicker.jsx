@@ -34,6 +34,11 @@ function ImagePicker() {
           console.log('WebSocket connection opened.');
           setWebSocket(ws);
 
+          // Send the initial JSON message with the number of photos
+          const initialMessage = JSON.stringify({ num_photos: images.length });
+          ws.send(initialMessage);
+
+          // Send each image as binary data
           images.forEach((image) => {
             const reader = new FileReader();
             reader.onload = (event) => {
@@ -57,6 +62,11 @@ function ImagePicker() {
           console.error('WebSocket error:', error);
         };
       } else {
+        // Send the initial JSON message with the number of photos
+        const initialMessage = JSON.stringify({ num_photos: images.length });
+        websocket.send(initialMessage);
+
+        // Send each image as binary data
         images.forEach((image) => {
           const reader = new FileReader();
           reader.onload = (event) => {
